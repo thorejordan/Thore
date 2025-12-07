@@ -10,6 +10,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "init-db": "ts-node src/scripts/initializeRooms.ts",
+    "enrich-db": "ts-node src/scripts/enrichRooms.ts",
     "scrape": "ts-node src/scripts/scrapeRooms.ts"
   },
   "dependencies": {
