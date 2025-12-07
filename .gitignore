@@ -37,7 +37,8 @@ Thumbs.db
 
 # Database
 *.db
-data/
+/data/
+**/mongodb-data/
 
 # Scraped data cache
 scraped_data/
