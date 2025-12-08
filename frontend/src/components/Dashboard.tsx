@@ -5,15 +5,9 @@ import {
   FileJson,
   Search,
   Upload,
-  ChevronDown,
-  ChevronUp,
   Table,
   Filter,
   Zap,
-  Monitor,
-  Server,
-  Network,
-  Terminal,
   CheckCircle2,
   AlertCircle,
   Loader2
@@ -22,18 +16,7 @@ import { useRooms } from '../hooks/useRooms';
 import RoomCard from './RoomCard';
 import RoomModal from './RoomModal';
 import type { Room } from '../types';
-
-// --- CONSTANTS & CONFIG ---
-
-export const ROLE_CONFIG = {
-  windows_client_admin: { label: 'Client Admin', icon: Monitor, color: '#3b82f6' }, // Blue
-  windows_server_admin: { label: 'Server Admin', icon: Server, color: '#8b5cf6' }, // Violet
-  network_admin: { label: 'Network Admin', icon: Network, color: '#f59e0b' }, // Amber
-  database_admin: { label: 'DB Admin', icon: Database, color: '#ec4899' }, // Pink
-  linux_admin: { label: 'Linux Admin', icon: Terminal, color: '#10b981' }, // Emerald
-};
-
-export const THEME_ACCENT = '#39ff14'; // Toxic Green
+import { ROLE_CONFIG, THEME_ACCENT, type RoleKey } from '../config/constants';
 
 const Dashboard: React.FC = () => {
   const { rooms, pagination, loading, error, filters, updateFilters, setPage } = useRooms({
@@ -43,7 +26,7 @@ const Dashboard: React.FC = () => {
 
   const [activeTab, setActiveTab] = useState('inventory');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRole, setSelectedRole] = useState<keyof typeof ROLE_CONFIG | null>(null);
+  const [selectedRole, setSelectedRole] = useState<RoleKey | null>(null);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
   const [notification, setNotification] = useState<{msg: string; type: 'success' | 'error'} | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -225,14 +208,14 @@ const Dashboard: React.FC = () => {
                 {Object.keys(ROLE_CONFIG).map(role => (
                   <button
                     key={role}
-                    onClick={() => setSelectedRole(role as keyof typeof ROLE_CONFIG)}
+                    onClick={() => setSelectedRole(role as RoleKey)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase transition-all flex items-center ${
                       selectedRole === role
                         ? 'bg-[#39ff14]/20 text-[#39ff14] border border-[#39ff14]/30 shadow-[0_0_10px_rgba(57,255,20,0.2)]'
                         : 'text-slate-500 hover:text-slate-300 hover:bg-white/5'
                     }`}
                   >
-                    {ROLE_CONFIG[role as keyof typeof ROLE_CONFIG].label}
+                    {ROLE_CONFIG[role as RoleKey].label}
                   </button>
                 ))}
               </div>
