@@ -82,7 +82,12 @@ const Dashboard: React.FC = () => {
         {/* Room Grid */}
         {!loading && rooms.length > 0 && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              className="grid gap-6"
+              style={{
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))'
+              }}
+            >
               {rooms.map((room) => (
                 <RoomCard
                   key={room._id}
