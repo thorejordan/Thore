@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 import { Clock, ChevronDown, ChevronUp } from 'lucide-react';
 import type { Room } from '../types';
-import { ROLE_CONFIG, THEME_ACCENT } from './Dashboard';
+import { ROLE_CONFIG, THEME_ACCENT, type RoleKey } from '../config/constants';
 import { getTagClusterColor, getDifficultyColor } from '../utils/tagColors';
 
 interface RoomCardProps {
   room: Room;
-  selectedRole: keyof typeof ROLE_CONFIG | null;
+  selectedRole: RoleKey | null;
   onClick: () => void;
 }
 
 // Role Sidebar Component (Space Saving)
-const RoleSidebar: React.FC<{ room: Room; selectedRole: keyof typeof ROLE_CONFIG | null }> = ({ room, selectedRole }) => {
+const RoleSidebar: React.FC<{ room: Room; selectedRole: RoleKey | null }> = ({ room, selectedRole }) => {
   // Mock role data - in the real implementation, this would come from the room data
   // For now, we'll create a simple scoring system based on tags and categories
-  const getRoleRelevance = (role: keyof typeof ROLE_CONFIG): number => {
+  const getRoleRelevance = (role: RoleKey): number => {
     const tags = room.tags.map(t => t.toLowerCase());
     const categories = room.categories.map(c => c.toLowerCase());
 
     // Simple scoring logic based on keywords
-    const scoreMap: Record<keyof typeof ROLE_CONFIG, string[]> = {
+    const scoreMap: Record<RoleKey, string[]> = {
       windows_client_admin: ['windows', 'active directory', 'powershell', 'endpoint'],
       windows_server_admin: ['windows', 'server', 'active directory', 'iis'],
       network_admin: ['network', 'cisco', 'firewall', 'wireshark', 'packet'],
@@ -43,7 +43,7 @@ const RoleSidebar: React.FC<{ room: Room; selectedRole: keyof typeof ROLE_CONFIG
   return (
     <div className="absolute right-0 top-0 bottom-0 w-12 flex flex-col items-center justify-center gap-1.5 bg-slate-950/60 border-l border-white/5 backdrop-blur-sm z-10">
       {Object.entries(ROLE_CONFIG).map(([roleKey, config]) => {
-        const score = getRoleRelevance(roleKey as keyof typeof ROLE_CONFIG);
+        const score = getRoleRelevance(roleKey as RoleKey);
         const isSelected = selectedRole === roleKey;
         const isRelevant = score >= 4;
 
